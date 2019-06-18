@@ -1,0 +1,14 @@
+#!/bin/sh
+echo "file, old, new" > results.csv
+
+for f in ./problems/*.lp; do
+  echo -e "Examining $f ... \c"
+  
+  old=$(clingo bodegas.lp "$f" | python3 read_time.py)
+  new=$(clingo parte_1.lp "$f" | python3 read_time.py)
+  
+  echo "Done. Original: $old s New: $new s"
+  
+  echo "$f, $old, $new" >> results.csv
+done
+echo "Results saved to results.csv"
